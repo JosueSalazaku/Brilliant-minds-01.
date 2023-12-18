@@ -1,0 +1,202 @@
+Full-stack
+Repository: classroom repository
+Type of Challenge: Learning Challenge
+Duration: 1 week
+Deployment strategy : N/A
+Team challenge : solo
+Intro
+What is full-stack development? Stacks are a lot of things, but for us, these are technological tools/libraries/softwares to create our development.
+
+Full-stack development would be referring to the use of all the necessary tools to create a full web app for example.
+
+References for the future:
+Once we get into frameworks for the Frontend development, and want to combine it with databases, a javascript framework and node, we often will see certain "terms" coming up, that are referring to a set of stacks or a full-stack.
+
+MERN (MongoDb - Express.js - React.js - Node.js)
+MEAN (MongoDb - Express.js - Angular.js - Node.js)
+MEVN (MongoDb - Express.js - Vue.js - Node.js)
+What about backend languages?
+Well, most of the popular backend web development languages have full-stack frameworks or could be used as a full-stack language.
+
+Note: You see mongoDb often as a DBMS, but really you can choose which ever DBMS fits your needs the best.
+
+Full-stack (web) development
+But to do full-stack development, you don't need to use those sets of stacks.
+
+Full stack web-development is just about working on all aspects of web-development
+
+Learning Objective
+Create a full stack web app
+
+Connect to a Database with Express.js
+Use routing
+Build a Frontend application (No frontend javascript frameworks!)
+Fetch data from your express server
+Apply a CRUD system (Update is a nice to have for now)
+Your Mission
+Can you relate to those moments where you have an amazing idea or inspiration, but then suddenly something comes up, and by the time you are done with that something, the idea disappeared...
+
+This week, we will build a web app, where you can save those ideas, but also remove them them at will.
+
+You will have to build on two ends: Frontend & Backend.
+
+An image example of the desired structure
+
+Tip: Think about time management
+
+Note: in order to run your project in the browser, you will have to run both the client and the server separately. in this case, open a terminal on the path of your server folder and use the npm script command there and use the live server from IDE in your client folder.
+
+Make sure that you are not using the same port on both!
+
+And Finally also use a database to store our data.
+
+Connecting MariaDB to Express.js
+When working with Express.js (or Nodejs in general), to create mostly any type of connection with "outside" tools or methods, we will need to install libraries/packages.
+
+A MariaDB (or MySql) connection is no different.
+
+The set-up
+package.json
+Inside our ./server folder, let's initialize (init) our node environment by using the usual command npm init inside that folder.
+
+Some package installations to always keep in mind:
+
+Dependencies:
+
+express
+nodemon (is a devDependency)
+cors
+dotenv
+For this exercise specifically:
+
+mariadb
+Other dependencies might be added whenever the project could benefit from it.
+
+.env
+Now that we have our package.json, let's also make our .env file (in the server folder).
+
+This .env file (called dotenv file) if a file we use for variables that are not meant to be shared publicly. It is a list of environment variables that are to be kept secret. which means it should always be immediately added to your .gitignore file as well!
+
+For database connections, typically, you will need to have the following variables:
+
+Host (server host name)
+User (database username)
+Password (database password: if you don't have one, leave an empty variable)
+Name (database name)
+An example:
+
+An image example of the env file
+
+server.js / .mjs
+Create a server file (.js or .mjs) which will handle our server logic.
+
+Write the basic express setup to get started.
+
+For MariaDB we need to import MariaDB into our file. We will also need the dotenv package to get access to our .env file.
+
+import mariadb from 'mariadb'
+import * as dotenv from 'dotenv'
+dotenv.config()
+Time to set up a pool: a MariaDB feature that improves performance by pooling active threads together instead of the old one thread per client connection method.
+
+const pool = mariadb.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    connectionLimit: 5
+})
+The execution
+Now that we have a pool, we can start using our pool to connect and execute queries in our database!
+
+We can now setup a connection that will execute a query and disconnect once it is done.
+
+(async () => {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        const data = await connection.query(`SELECT * FROM brilliant_minds.ideas`);
+        console.log(data)
+    } catch(err) {
+        throw err;
+    } finally {
+        if (connection) connection.end();
+    }
+})()
+
+// the wrapper around the connection & try-catch-finally is just nameless arrow function to create an asynchronous environment.
+IMPORTANT: It is a little bit fast, but if think you are understanding this well enough, try moving to "prepared statements" which is a important safety method when using queries!
+
+Link Between Backend & Frontend
+We have seen how a pool is created and how to make a query.
+
+But how do we get that data in our frontend (client)? Well, it is actually something we are already familiar with.
+
+Response & Fetch
+
+In our backend, you now have to combine the above examples in an Express application.
+
+Whilst the creation of a pool is more a global function, the connections should be specific to the requests and sent as a response. (within routes)
+
+server.get("/show-all", async (req, res) => {
+    // database connection
+    // execute query
+        // send response with data
+})
+In our frontend, you can use the familiar Fetch to get this data.
+
+GET requests
+(async () => {
+    const response = await fetch('http://localhost:3000/show-ideas');
+    const data = await response.json()
+    console.log(data)
+})()
+POST requests
+const options = {
+    method:'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        name: userName // variable with the value you want to send
+    })
+};
+
+(async () => {
+    const response = await fetch('http://localhost:3000/new-idea', options);
+    const data = await response.json()
+    console.log(data)
+})()
+🌱 Must haves
+Frontend (AKA: "FE")
+No frontend Javascript frameworks
+
+A landing page: Containing all the saved ideas from the database
+A "create" page: with a form to create a new idea
+Each idea has a delete button
+When clicking on the delete button: it removes the idea from the database
+Tip: Create a JS file per page.
+
+Backend (AKA: "BE")
+Use express
+have a new database brilliant_minds
+Inside that database a table "ideas" with the columns:
+title (VARCHAR(255))
+description (TEXT)
+created_at (Timestamp)
+Create a route for:
+the new idea page (create)
+the landing page (read)
+the delete button (delete)
+Make a database connection in express
+Tip: Only use one JS file for now.
+
+🌼 Nice to haves
+Refactor into multiple files (BE)
+Add an edit/update page (FE) and an edit route (BE)
+Redirect your create and edit page back to the landing page after execution (FE)
+Add a confirmation modal when deleting an idea (FE)
+Make your queries with "prepared statements" (BE)
+Create a Validation error message (BE + FE)
+When the title or the description is empty, the server responds back with an error (see: route middlewares)
+If the fetch reads an error, display it on the page.
+Good luck!
