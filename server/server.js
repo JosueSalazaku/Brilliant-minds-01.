@@ -1,23 +1,44 @@
-const express = require("express");
+import express from "express";
+import mariadb from "mariadb";
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || "localhost";
 const app = express();
-/** TODO:
 
-have a new database brilliant_minds
-Inside that database a table "ideas" with the columns:
-title (VARCHAR(255))
-description (TEXT)
-created_at (Timestamp)
-Create a route for:
-the new idea page (create)
-the landing page (read)
-the delete button (delete)
-Make a database connection in express
-Tip: Only use one JS file for now. */
+const pool = mariadb.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  connectionLimit: 5,
+});
 
-const PORT = 3000;
+app.use(express.json());
 
-app.get("/", function (req, res) {
-  res.send("Hello wold");
+app.get("/", async (req, res) => {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const data = await connection.query(`SELECT * FROM brilliant_minds.ideas`);
+    res.send(data);
+  } catch (err) {
+    throw err;
+  } finally {
+    if (connection) connection.end();
+  }
+});
+
+app.get("/ideas/:id", async (req, res) => {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const prepare = await connection.prepare(
+      "SELECT * FROM ideas WHERE id = ?"
+    );
+    const data = prepare.execute([req.params.id]);
+  } catch (error) {}
 });
 
 app.listen(PORT, () =>
