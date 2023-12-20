@@ -1,20 +1,24 @@
 const ideasSection = document.querySelector("#ideas-section");
-const showIdeas = document.createElement("div");
-
-showIdeas.classList.add("show-ideas");
-
 const apiUrl = "http://localhost:3000/ideas";
 
 fetch(apiUrl)
   .then((response) => response.json())
   .then((data) => {
     data.forEach((idea) => {
-      const ideaElement = document.createElement("h3");
-      ideaElement.textContent = `Title: ${idea.title}, Description: ${idea.description}, ${idea.created_at}`;
-      ideasSection.appendChild(ideaElement);
+      const ideaTitle = document.createElement("h3");
+      ideaTitle.innerHTML = `${idea.title}`;
+
+      const ideaDescription = document.createElement("p");
+      ideaDescription.innerHTML = `Description: ${idea.description}, time  ${idea.created_at}`;
+
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("delete-btn");
-      ideaElement.appendChild(deleteBtn);
+      deleteBtn.innerHTML = "Delete";
+
+      // Append the title, description, and delete button to ideasSection
+      ideasSection.appendChild(ideaTitle);
+      ideasSection.appendChild(ideaDescription);
+      ideasSection.appendChild(deleteBtn);
     });
   })
   .catch((error) => console.error("Error fetching ideas:", error));

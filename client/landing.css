@@ -39,7 +39,7 @@ a {
 
 #ideas-section {
   font-size: 12px;
-  margin: 30px;
+  margin: 20px;
   border: 2px solid white;
   display: flex;
   flex-direction: column;
@@ -58,7 +58,52 @@ h3 {
 }
 
 .delete-btn {
-  width: 55px;
-  height: 25px;
-  margin: 30px;
+  width: 25px;
+  height: 20px;
+  margin-left: 20px;
+  background-color: white;
+  border-radius: 75px;
+}
+
+.delete-btn:hover {
+  background: red;
+}
+
+/* Media Query for Larger Screens */
+@media (min-width: 768px) {
+  #container {
+    height: 100vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .navbar {
+    background: black;
+    height: 100px;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  #ideas-section {
+    font-size: 20px; /* Adjust the font size for larger screens */
+    margin: 40px; /* Adjust margin for larger screens */
+    padding-top: 30px;
+    padding-bottom: 45px;
+    width: 500px;
+  }
+
+  h3 {
+    margin: 30px; /* Adjust margin for larger screens */
+  }
+
+  .delete-btn {
+    width: 30px; /* Adjust button width for larger screens */
+    height: 25px; /* Adjust button height for larger screens */
+  }
 }
