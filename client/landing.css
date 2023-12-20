@@ -56,3 +56,9 @@ a {
 h3 {
   margin: 20px;
 }
+
+.delete-btn {
+  width: 55px;
+  height: 25px;
+  margin: 30px;
+}

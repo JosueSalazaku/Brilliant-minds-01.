@@ -1,5 +1,6 @@
 const ideasSection = document.querySelector("#ideas-section");
 const showIdeas = document.createElement("div");
+
 showIdeas.classList.add("show-ideas");
 
 const apiUrl = "http://localhost:3000/ideas";
@@ -12,6 +13,8 @@ fetch(apiUrl)
       ideaElement.textContent = `Title: ${idea.title}, Description: ${idea.description}, ${idea.created_at}`;
       ideasSection.appendChild(ideaElement);
       const deleteBtn = document.createElement("button");
+      deleteBtn.classList.add("delete-btn");
+      ideaElement.appendChild(deleteBtn);
     });
   })
   .catch((error) => console.error("Error fetching ideas:", error));
