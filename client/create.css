@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: white;
+  background: rgb(16, 16, 38);
+  font-family: "Poppins", sans-serif;
+}
+
+#container {
+  height: 100vh;
+  width: auto;
+}
+
+.navbar {
+  background: black;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#ideas-section {
+}
