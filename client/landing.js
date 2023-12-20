@@ -1,4 +1,4 @@
-const ideasSection = document.querySelector(".ideas-section");
+const ideasSection = document.querySelector("#ideas-section");
 
 const showIdeas = document.createElement("div");
 showIdeas.classList.add("show-ideas");
