@@ -60,7 +60,7 @@ app.get("/ideas/:id", async (req, res) => {
   }
 });
 
-app.post("/ideas", async (req, res) => {
+app.post("/ideas/", async (req, res) => {
   const { title, description } = req.body;
   let connection;
   try {
@@ -70,9 +70,14 @@ app.post("/ideas", async (req, res) => {
       [title, description]
     );
 
-    res
-      .status(201)
-      .json({ message: "Idea was added successfully", result: data });
+    res.status(201).json({
+      message: "Idea was added successfully",
+      result: {
+        ...data,
+        // Convert BigInt values to strings
+        insertId: String(data.insertId),
+      },
+    });
   } catch (err) {
     console.error("Error in /ideas POST:", err);
     res.status(500).send("Server Error");
