@@ -5,7 +5,7 @@ import cors from "cors";
 
 config();
 
-const PORT = process.env.PORT || 3050;
+const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "localhost";
 const app = express();
 
@@ -16,6 +16,7 @@ const pool = mariadb.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
   connectionLimit: 5,
 });
 

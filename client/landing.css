@@ -5,8 +5,15 @@
 
 body {
   color: white;
-  background: rgb(16, 16, 38);
+  background: rgb(13, 13, 26);
   font-family: "Poppins", sans-serif;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right, #80808012 1px, transparent 1px),
+    linear-gradient(to bottom, #a8a7a712 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 #container {
@@ -31,5 +38,21 @@ a {
 }
 
 #ideas-section {
-  font-size: 15px;
+  font-size: 12px;
+  margin: 30px;
+  border: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: rgba(83, 108, 170, 0.199);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.2px);
+  -webkit-backdrop-filter: blur(4.2px);
+  border: 1px solid rgba(32, 34, 69, 0.42);
+}
+
+h3 {
+  margin: 20px;
 }
