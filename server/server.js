@@ -91,7 +91,7 @@ app.post("/ideas/", async (req, res) => {
 });
 
 // Delete an idea by ID
-app.delete("/ideas", async (req, res) => {
+app.delete("/ideas/:id", async (req, res) => {
   let connection;
   try {
     connection = await pool.getConnection();
@@ -100,7 +100,12 @@ app.delete("/ideas", async (req, res) => {
     ]);
 
     if (data.affectedRows > 0) {
-      res.json({ message: "Idea deleted successfully", result: data });
+      // Convert the BigInt to a string
+      const serializedId = String(req.params.id);
+      res.json({
+        message: "Idea deleted successfully",
+        result: { id: serializedId },
+      });
     } else {
       res.status(404).send("Idea not found");
     }
