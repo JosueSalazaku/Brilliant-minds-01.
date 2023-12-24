@@ -9,13 +9,12 @@ fetch(apiUrl)
       ideaTitle.innerHTML = `${idea.title}`;
 
       const ideaDescription = document.createElement("p");
-      ideaDescription.innerHTML = `Description: ${idea.description}, time  ${idea.created_at}`;
+      ideaDescription.innerHTML = `Description: ${idea.description}, <br> time  ${idea.created_at}`;
 
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("delete-btn");
       deleteBtn.innerHTML = "Delete";
 
-      // Append the title, description, and delete button to ideasSection
       ideasSection.appendChild(ideaTitle);
       ideasSection.appendChild(ideaDescription);
       ideasSection.appendChild(deleteBtn);

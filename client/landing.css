@@ -91,19 +91,24 @@ h3 {
   }
 
   #ideas-section {
-    font-size: 20px; /* Adjust the font size for larger screens */
-    margin: 40px; /* Adjust margin for larger screens */
+    font-size: 20px;
+    margin: 40px;
     padding-top: 30px;
     padding-bottom: 45px;
     width: 500px;
+    text-align: center;
   }
 
   h3 {
-    margin: 30px; /* Adjust margin for larger screens */
+    margin: 30px;
+  }
+
+  p {
+    margin: 10px;
   }
 
   .delete-btn {
-    width: 30px; /* Adjust button width for larger screens */
-    height: 25px; /* Adjust button height for larger screens */
+    width: 30px;
+    height: 25px;
   }
 }

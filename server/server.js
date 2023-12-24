@@ -17,7 +17,7 @@ const pool = mariadb.createPool({
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
-  connectionLimit: 5,
+  connectionLimit: 100,
 });
 
 app.use(cors());
@@ -91,7 +91,7 @@ app.post("/ideas/", async (req, res) => {
 });
 
 // Delete an idea by ID
-app.delete("/ideas/:id", async (req, res) => {
+app.delete("/ideas", async (req, res) => {
   let connection;
   try {
     connection = await pool.getConnection();
